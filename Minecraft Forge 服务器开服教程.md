@@ -1,4 +1,4 @@
-﻿# Minecraft Forge 服务器开服教程
+# Minecraft Forge 服务器开服教程
 
 [本文 GitHub](https://github.com/TowardtheStars/TowardtheStars-CSDN-Blogs/blob/main/Minecraft%20Forge%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E6%9C%8D%E6%95%99%E7%A8%8B.md)
 
@@ -9,7 +9,7 @@
 
 - 熟练使用命令行的基本命令，例如用 `cd` 切换当前文件夹等
 - 知道 Java 和 JVM 的含义
-- 熟悉 pip 包管理器，可以用 pip 安装、更新、删除 python 包 （MCDReforged 需要）
+- 熟悉 pip 包管理器，可以用 pip 安装、更新、删除 python 包 （MCDReforged 需要，非必须）
 - 基本的英文阅读能力，至少要可以配合翻译软件看懂英语文档和日志文件
 - 基本熟悉主要电脑硬件的名字和大概作用
 - 熟悉 TCP/IP 协议的基础知识，例如 IP 地址、端口号、端口映射等
@@ -29,11 +29,21 @@ MCDR 是一个套在 Java 服务器外面的壳子，通过读取解析你服务
 
 ### 软件
 
-- Java 8，推荐 8u302（除了 8u321 和以后的版本其实都行）
-- Python 3.9 (MCDReforged 需要)
+- ~~Java 8，推荐 8u302（除了 8u321 和以后的版本其实都行）~~ Java 看下文
+- Python 3.9+ (MCDReforged 需要)
 - python 库 (MCDReforged 需要)
   - mcdreforged
-- 一个公网 IP 或域名
+- 一个公网 IP 或域名，能解析到你的服务器
+
+## 选择 Java
+
+根据 Minecraft 版本的不同，所需要的 Java 版本也不同，报错 `找不到主类 @user_jvm_args.txt` 的腐竹大概率是卡在这里了。下面列出几个常用的~~笔者搞过的~~版本对应关系：
+
+- 如果你的服务器是 1.12.2 以及以下，请使用 Java 8
+- 如果你的服务器是 1.16.5，请使用 Java 11
+- 如果你的服务器是 1.17 以及以上，请使用 Java 17
+
+这里推荐下 Azul Zulu 的 Java 运行时版本，参见 [更换 JVM](#更换 JVM)
 
 ## 配置 Forge 服务端
 
@@ -75,6 +85,7 @@ java -xms1024M -xmx2048M -jar forge-1.12.2-14.23.5.2860.jar nogui
 
 这里解释一下 `java` 命令的各项参数：
 
+- `java`：Java 可执行文件，在有多个不同版本 Java 时用你需要的版本的 Java 可执行文件的绝对路径代替
 - `-xms<内存容量>`：最小分配给服务器的内存，格式为数字后加单位，例如 `-xms1024M` 是分配 1024 MB，`-xms16G` 是分配 16GB
 - `-xmx<内存容量>`：最大分配给服务器的内存，格式同上，必须大于等于 `-xms` 参数给定的内存容量，同时小于服务器内存容量
 - `-jar <JAR 文件路径>`：选择你命令 Java 启动的服务器 Jar 文件的路径；这里有两个 Jar 文件，名为 `minecraft_server.1.xx.x.jar` 的是原版服务器的 Jar 文件，另一个是我们想要的 forge 服务器文件。
@@ -142,7 +153,7 @@ pause
 一些纯客户端 mod 是不可以安装到服务端的，如果安装上会导致服务器无法启动，例如 Optifine。
 这些 mod 的共同特点：
 
-- 会在服务端启动时报错: `java.lang.NoClassDefFoundError`, 而且找不到的类的路径中通常带有 `client` 一词
+- 会在服务端启动时报错: `java.lang.NoClassDefFoundError`, 而且找不到的类的路径中通常带有 `client` 或 `render`
 - 一般会在 mod 介绍页面标明 client only
 - 仅包含 GUI、资源包、渲染上的功能
 
@@ -173,7 +184,7 @@ MCDR 官方 QQ 群：1101314858
 
 推荐插件（安装使用方法看插件文档）：
 
-- ChatBridge：用于服务器和 QQ群、开黑啦服务器进行聊天互通
+- ChatBridge：用于服务器和 QQ群、~~开黑啦~~ Kook 服务器进行聊天互通
   - 不支持 Python 3.10 （2022 Apr.2）
 - Auto Plugin Reloader：用于自动重载插件配置文件
 - Timed QBM：用于自动定时备份服务器
@@ -260,6 +271,8 @@ Sponge 插件的来源有很多，有 Sponge 官方插件库 [Ore](https://ore.s
 #### 调整 JVM 参数
 
 [Aikar: 调整JVM —— 非常有效的服务器启动参数 - 联机教程 - Minecraft(我的世界)中文论坛 -](https://www.mcbbs.net/thread-867786-1-1.html)
+
+<a id="更换 JVM"></a>
 
 #### 更换 JVM
 
